@@ -1,3 +1,4 @@
+Notebooks = new Mongo.Collection('notebooks');
 Sections = new Mongo.Collection('sections');
 Notes = new Mongo.Collection('notes');
 
@@ -13,6 +14,12 @@ if (Meteor.isClient) {
     Template.sections.helpers({
         'section': function() {
             return Sections.find( {}, {sort: {name: 1}});
+        }
+    });
+
+    Template.notebooks.helpers({
+        'notebook': function() {
+            return Notebooks.find( {}, {sort: {name: 1}});
         }
     });
 
@@ -60,6 +67,19 @@ if (Meteor.isClient) {
             var documentId = this._id;
 
             Notes.update({ _id: documentId }, {$set: { content: noteIndividual }} );
+        }
+    });
+
+    Template.addNotebook.events({
+        'submit form': function(event) {
+            event.preventDefault();
+            var notebookTitle = $('[name=notebookTitle]').val();
+
+            Notebooks.insert({
+                title: notebookTitle
+            });
+
+            $('[name=notebookTitle]').val('');
         }
     });
 

@@ -84,6 +84,13 @@
     </form>
 </template>
 
+<template name="addNotebook">
+    <form>
+        Add a new Notebook:
+        <input type="text" placeholder="Notebook name here..." name="notebookTitle">
+    </form>
+</template>
+
 <template name="notes">
     <div class="container">
         <div class="row">
@@ -114,33 +121,25 @@ Roast aged brewed, chicory, decaffeinated qui plunger pot single origin dark. Me
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <h2 class="pull-left">Cadernos</h2>
+                <h2 class="pull-left">Notebooks</h2>
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-xs-12">
+                {{ >addNotebook }}
+            </div>
+        </div>
+
+
         <div class="row margem">
             <div class="col-md-10 col-md-offset-1">
+                {{ #each notebook }}
                 <div class="caderno col-md-4 col-md-offset-1">
-                    <h3><a href="seccao.html">blá</a></h3>
+                    <h3><a href="seccao.html">{{ title }}</a></h3>
                     12 notas
                 </div>
-                <div class="caderno col-md-4 col-md-offset-1">
-                    <h3><a href="seccao.html">nome enorme só pela pura diversão de ter um nome gigante aqui</a></h3>
-                    170 notas
-                </div>
-            </div>
-        </div>
-
-        <div class="row margem">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="caderno col-md-4 col-md-offset-1">
-                    <h3><a href="seccao.html">blé</a></h3>
-                    7 notas
-                </div>
-                <div class="caderno col-md-4 col-md-offset-1">
-                    <h3><a href="seccao.html">a Sofia é má</a></h3>
-                    17 notas
-                </div>
+                {{ /each }}
             </div>
         </div>
 
