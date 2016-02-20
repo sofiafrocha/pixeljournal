@@ -136,3 +136,11 @@ Router.route('/notes/:_id', {
         return Sections.findOne({ _id: currentSection });
     }
 });
+Router.route('/note/:_id', {
+    name: 'note',
+    template: 'note',
+    data: function() {
+        var currentNote = this.params._id;
+        return Notes.findOne({ _id: currentNote });
+    }
+});
