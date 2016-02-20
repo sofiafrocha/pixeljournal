@@ -22,7 +22,10 @@
 
 <template name="navigation">
     <section id="nav">
-        <p class="nav_logo"><a href="{{pathFor route='home'}}"></a>PixelJournal</p>
+        <p class="nav_logo"><a href="{{pathFor route='home'}}">PixelJournal</a></p>
+        <p>
+            <a href="{{ pathFor route='notebooks' }}">Notebooks</a>
+        </p>
     </section>
 </template>
 
@@ -95,10 +98,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <h2 class="pull-left">Nota</h2>
+                <h2 class="pull-left">Section: {{ title }} - Notas</h2>
             </div>
         </div>
+
         <div class="row">
+            <div class="col-xs-12">
+                {{ >quickAddNote }}
+            </div>
+        </div>
+        <!-- <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <p class="nota">
                     Black whipped, latte brewed in, fair trade, cappuccino, steamed organic aromatic barista seasonal. Galão extra lungo decaffeinated beans cappuccino bar crema ristretto. Shop, filter robust saucer aroma sugar, foam aromatic extra cream skinny. Single origin cup, aged con panna wings cappuccino shop decaffeinated. <br>
@@ -106,7 +115,7 @@
 Roast aged brewed, chicory, decaffeinated qui plunger pot single origin dark. Medium blue mountain variety, decaffeinated spoon froth iced extraction. So that, spoon white cup redeye frappuccino. Sugar sweet and, strong froth doppio, seasonal kopi-luwak skinny turkish galão.
                 </p>
             </div>
-        </div>
+        </div> -->
 
     </div>
 
@@ -171,17 +180,13 @@ Roast aged brewed, chicory, decaffeinated qui plunger pot single origin dark. Me
                 <div class="col-md-11 col-md-offset-1">
 
                         <div class="caderno col-md-121">
-                            <h3><a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="cobaia">
-                                {{ title }}</a>
+                            <h3>
+                                <!-- <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="cobaia"> -->
+                                <a href="/notes/{{ _id }}">
+                                    {{ title }}
+                                </a>
                             </h3>
                             12 notas
-                        </div>
-                        <div class="collapse cobaia" id="collapseExample">
-                            <ul class="seccao_notas col-md-10 col-md-offset-1">
-                                <li><a href="nota.html">1 de Janeiro</a></li>
-                                <li><a href="nota.html">2 de Janeiro</a></li>
-                                <li><a href="nota.html">3 de Janeiro</a></li>
-                            </ul>
                         </div>
 
                 </div>

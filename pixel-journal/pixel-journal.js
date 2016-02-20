@@ -7,7 +7,8 @@ if (Meteor.isClient) {
 
     Template.notes.helpers( {
         'note': function() {
-            return Notes.find( {}, {sort: {createdAt: -1}} );
+            var currentSection = this._id;
+            return Notes.find( { sectionId: currentSection }, {sort: {createdAt: -1}} );
         }
     });
 
@@ -34,6 +35,7 @@ if (Meteor.isClient) {
         // Add a quick note
         'submit form': function(event) {
             event.preventDefault();
+            var currentSection = this._id;
             var noteContent = $('[name="noteContent"]').val();
             var noteName = noteContent;
 
@@ -44,7 +46,8 @@ if (Meteor.isClient) {
             Notes.insert({
                 name: noteName,
                 content: noteContent,
-                createdAt: new Date()
+                createdAt: new Date(),
+                sectionId: currentSection
             })
 
             $('[name="noteContent"]').val('');
@@ -125,6 +128,11 @@ Router.route('/sections/:_id', {
         return Notebooks.findOne({ _id: currentNotebook });
     }
 });
-Router.route('/notes', {
-    name: 'notes'
+Router.route('/notes/:_id', {
+    name: 'notes',
+    template: 'notes',
+    data: function() {
+        var currentSection = this.params._id;
+        return Sections.findOne({ _id: currentSection });
+    }
 });
