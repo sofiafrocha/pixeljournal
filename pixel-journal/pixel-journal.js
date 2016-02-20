@@ -13,7 +13,8 @@ if (Meteor.isClient) {
 
     Template.sections.helpers({
         'section': function() {
-            return Sections.find( {}, {sort: {name: 1}});
+            var currentNotebook = this._id;
+            return Sections.find( { notebookId: currentNotebook }, {sort: {name: 1}});
         }
     });
 
@@ -87,9 +88,12 @@ if (Meteor.isClient) {
         'submit form': function(event) {
             event.preventDefault();
             var sectionTitle = $('[name="sectionTitle"]').val();
+            var currentNotebook = this._id;
 
             Sections.insert({
-                title: sectionTitle
+                title: sectionTitle,
+                createdAt: new Date(),
+                notebookId: currentNotebook
             });
 
             $('[name=sectionTitle]').val('');
@@ -105,7 +109,8 @@ Router.configure({
     layoutTemplate: 'main'
 });
 Router.route('/', {
-    template: 'home',
+    name: 'home',
+    template: 'home'
 });
 Router.route('/register', {
     name: 'register'
@@ -113,8 +118,12 @@ Router.route('/register', {
 Router.route('/notebooks', {
     name: 'notebooks'
 });
-Router.route('/sections', {
-    name: 'sections'
+Router.route('/sections/:_id', {
+    template: 'sections',
+    data: function() {
+        var currentNotebook = this.params._id;
+        return Notebooks.findOne({ _id: currentNotebook });
+    }
 });
 Router.route('/notes', {
     name: 'notes'
