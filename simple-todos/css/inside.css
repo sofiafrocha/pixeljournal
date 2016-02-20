@@ -9,7 +9,7 @@ body {
 
 #nav {
     background: linear-gradient(113deg, #00e79d, #02d1d8);;
-    color: white;
+    color: #363636;
     width: 100vw;
     padding: 20px 0;
     font-size: 13pt;
@@ -46,6 +46,34 @@ form {
     padding: 20px 0;
 }
 
+.caderno:hover {
+    background: springgreen;
+}
+
+.caderno a{
+    color: #363636;
+    text-decoration: underline;
+}
+
+.caderno a:hover{
+    color: #161616;
+}
+
+.seccao_notas li {
+    border-bottom: 1px lightgray solid;
+    padding: 5px 0;
+    list-style: none;
+}
+
+.seccao_notas li:hover {
+    background: whitesmoke;
+}
+
+.nota {
+    text-align: left;
+}
+
+
 .btn {
 	border: none;
     background: white;
@@ -71,6 +99,3 @@ form {
 	transition: all 0.3s;
 }
 
-.btn .confirm {
-    background: green;
-}
