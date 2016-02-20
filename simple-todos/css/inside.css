@@ -1,0 +1,76 @@
+body {
+    font-family: "Josefin Slab", sans-serif;
+    background: white;
+    color: #363636;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+}
+
+#nav {
+    background: linear-gradient(113deg, #00e79d, #02d1d8);;
+    color: white;
+    width: 100vw;
+    padding: 20px 0;
+    font-size: 13pt;
+}
+
+#nav .user {
+    margin: 0 40px;
+    text-align: right;
+}
+
+#nav .logo {
+    text-align: left;
+    margin: 0 30px;
+    color: black;
+}
+
+.container {
+    color: #363636;
+    font-family: "Josefin Slab", sans-serif;
+    padding: 50px 0px;
+    text-align: center;
+}
+
+form {
+    margin: 50px 0;
+}
+
+.margem {
+    margin: 50px 0;
+}
+
+.caderno {
+    background: mediumspringgreen;
+    padding: 20px 0;
+}
+
+.btn {
+	border: none;
+    background: white;
+	color: teal;
+	padding: 25px 80px;
+	display: inline-block;
+	margin: 20px 0;
+	text-transform: uppercase;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+    width: 200px;
+    height: 80px;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn .confirm {
+    background: green;
+}
