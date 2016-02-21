@@ -5,6 +5,21 @@ Notes = new Mongo.Collection('notes');
 if (Meteor.isClient) {
     console.log("hello!");
 
+    Template.register.events({
+        'submit form': function(event) {
+            event.preventDefault();
+            console.log('signing you up!');
+            var email = $('[name=email]').val();
+            var password = $('[name=password]').val();
+
+            Accounts.createUser({
+                email: email,
+                password: password
+            });
+            Router.go('home');
+        }
+    });
+
     Template.notes.helpers( {
         'note': function() {
             var currentSection = this._id;
@@ -15,13 +30,13 @@ if (Meteor.isClient) {
     Template.sections.helpers({
         'section': function() {
             var currentNotebook = this._id;
-            return Sections.find( { notebookId: currentNotebook }, {sort: {name: 1}});
+            return Sections.find( { notebookId: currentNotebook }, {sort: {createdAt: -1} });
         }
     });
 
     Template.notebooks.helpers({
         'notebook': function() {
-            return Notebooks.find( {}, {sort: {name: 1}});
+            return Notebooks.find( {}, {sort: {createdAt: -1}});
         }
     });
 
@@ -80,7 +95,11 @@ if (Meteor.isClient) {
             var notebookTitle = $('[name=notebookTitle]').val();
 
             Notebooks.insert({
-                title: notebookTitle
+                title: notebookTitle,
+                createdAt: new Date()
+            }, function(error, results) {
+                console.log(results);
+                Router.go('sections', { _id: results });
             });
 
             $('[name=notebookTitle]').val('');
@@ -122,6 +141,7 @@ Router.route('/notebooks', {
     name: 'notebooks'
 });
 Router.route('/sections/:_id', {
+    name: 'sections',
     template: 'sections',
     data: function() {
         var currentNotebook = this.params._id;
