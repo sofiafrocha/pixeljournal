@@ -25,7 +25,12 @@
         <a href="{{pathFor route='home'}}">PixelJournal</a>
         <a href="{{ pathFor route='notebooks' }}">Notebooks</a>
         <button type="button" class="btn btn-default navbar-right">Adicionar Nota</button>
-        <button type="button" class="signup btn btn-default navbar-right">Login</button>
+        {{ #if currentUser }}
+            <a type="button" class="logout btn btn-default navbar-right">Logout</a>
+        {{ else }}
+            <a href="{{ pathFor route='login' }}" type="button" class="signup btn btn-default navbar-right">Login</a>
+            <a href="{{ pathFor route='register' }}" type="button" class="signup btn btn-default navbar-right">Register</a>
+        {{ /if }}
     </nav>
 </template>
 
@@ -44,11 +49,11 @@
     <div class="container home">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <h1>Regista-te</h1>
+                <h2>Register</h2>
                 <form>
                     <div class="form-group">
                     <label for="exampleInputPassword1">Nome</label>
-                    <input type="text" class="form-control" id="InputName" placeholder="Antonieta da Silva" autofocus>
+                    <input type="text" class="form-control" name="name" id="InputName" placeholder="Antonieta da Silva" autofocus>
                   </div>
 
                   <div class="form-group">
@@ -69,7 +74,26 @@
 </template>
 
 <template name="login">
-    <h2>Login</h2>
+    <div class="container home">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>Log in</h2>
+                <form>
+                  <div class="form-group">
+                    <label for="InputEmail">Email</label>
+                    <input type="email" class="form-control" name="email" id="InputEmail" placeholder="antonieta@antonieta.com">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="InputPassword">Password</label>
+                    <input type="password" class="form-control" name="password" id="InputPassword" placeholder="Isto agora é segredo">
+                  </div>
+
+                  <button type="submit" class="btn confirm">Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </template>
 
 <template name="quickAddNote">
@@ -210,15 +234,3 @@ Roast aged brewed, chicory, decaffeinated qui plunger pot single origin dark. Me
     </div>
 
 </template>
-
- <!--
-<template name="task">
-  <li class="{{#if checked}}checked{{/if}}">
-    <button class="delete">&times;</button>
-
-    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
-
-    <span class="text">{{text}}</span>
-  </li>
-</template>
--->

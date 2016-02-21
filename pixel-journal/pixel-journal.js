@@ -14,29 +14,70 @@ if (Meteor.isClient) {
 
             Accounts.createUser({
                 email: email,
-                password: password
+                password: password,
+                name: name
+            }, function(error) {
+                if (error) {
+                    console.log(error.reason);
+                }
+                else {
+                    Router.go('notebooks');
+                }
             });
             Router.go('home');
+        }
+    });
+
+    Template.login.events({
+        'submit form': function(event){
+            event.preventDefault();
+            var email = $('[name=email]').val();
+            var password = $('[name=password]').val();
+
+            Meteor.loginWithPassword(email, password, function(error) {
+
+                if (error) {
+                    console.log(error.reason);
+                }
+                else {
+                    Router.go('notebooks');
+                }
+            });
+        }
+    });
+
+    Template.navigation.events({
+        'click .logout': function(event) {
+            event.preventDefault();
+            Meteor.logout();
+            Router.go('login');
         }
     });
 
     Template.notes.helpers( {
         'note': function() {
             var currentSection = this._id;
-            return Notes.find( { sectionId: currentSection }, {sort: {createdAt: -1}} );
+            var currentUser = Meteor.userId();
+
+            return Notes.find( { createdBy: currentUser, sectionId: currentSection }, {sort: {createdAt: -1}} );
         }
     });
 
     Template.sections.helpers({
         'section': function() {
             var currentNotebook = this._id;
-            return Sections.find( { notebookId: currentNotebook }, {sort: {createdAt: -1} });
+            var currentUser = Meteor.userId();
+
+            return Sections.find( { createdBy: currentUser, notebookId: currentNotebook }, {sort: {createdAt: -1} });
         }
     });
 
     Template.notebooks.helpers({
         'notebook': function() {
-            return Notebooks.find( {}, {sort: {createdAt: -1}});
+            var currentUser = Meteor.userId();
+            console.log("currentUser: " + currentUser);
+
+            return Notebooks.find({ createdBy: currentUser }, {sort: {createdAt: -1}} );
         }
     });
 
@@ -53,6 +94,7 @@ if (Meteor.isClient) {
             var currentSection = this._id;
             var noteContent = $('[name="noteContent"]').val();
             var noteName = noteContent;
+            var currentUser = Meteor.userId();
 
             if (noteContent.length > 10) {
                 noteName = noteContent.substring(0,10);
@@ -62,7 +104,8 @@ if (Meteor.isClient) {
                 name: noteName,
                 content: noteContent,
                 createdAt: new Date(),
-                sectionId: currentSection
+                sectionId: currentSection,
+                createdBy: currentUser
             })
 
             $('[name="noteContent"]').val('');
@@ -93,13 +136,15 @@ if (Meteor.isClient) {
         'submit form': function(event) {
             event.preventDefault();
             var notebookTitle = $('[name=notebookTitle]').val();
+            var currentUser = Meteor.userId();
 
             Notebooks.insert({
                 title: notebookTitle,
-                createdAt: new Date()
+                createdAt: new Date(),
+                createdBy: currentUser
             }, function(error, results) {
                 console.log(results);
-                Router.go('sections', { _id: results });
+                // Router.go('sections', { _id: results });
             });
 
             $('[name=notebookTitle]').val('');
@@ -111,11 +156,13 @@ if (Meteor.isClient) {
             event.preventDefault();
             var sectionTitle = $('[name="sectionTitle"]').val();
             var currentNotebook = this._id;
+            var currentUser = Meteor.userId();
 
             Sections.insert({
                 title: sectionTitle,
                 createdAt: new Date(),
-                notebookId: currentNotebook
+                notebookId: currentNotebook,
+                createdBy: currentUser
             });
 
             $('[name=sectionTitle]').val('');
@@ -133,6 +180,9 @@ Router.configure({
 Router.route('/', {
     name: 'home',
     template: 'home'
+});
+Router.route('/login', {
+    name: 'login'
 });
 Router.route('/register', {
     name: 'register'
