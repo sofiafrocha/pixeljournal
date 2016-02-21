@@ -9,9 +9,8 @@
     background: springgreen;
 }
 
-.caderno a{
+.caderno a, .seccao_notas li a{
     color: #363636;
-    text-decoration: underline;
 }
 
 .caderno a:hover{
@@ -22,6 +21,11 @@
     border-bottom: 1px lightgray solid;
     padding: 5px 0;
     list-style: none;
+}
+
+
+.seccao_notas small {
+    color: mediumspringgreen;
 }
 
 .seccao_notas li:hover {

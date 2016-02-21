@@ -1,27 +1,51 @@
 body {
+    color: #363636;
     font-family: "Josefin Slab", sans-serif;
     padding: 0;
     margin: 0;
     font-size: 14pt;
 }
 
-nav {
+.navbar-default {
+    background: teal;
+    color: white;
+    padding: 20px 40px;
+    margin: 0;
+}
+
+.navbar-default a {
+    color: mediumspringgreen;
+    margin: 0 5px;
+}
+
+.navbar-default .nav-link {
+    color: white;
+    text-decoration: underline;
+}
+
+.container-home ~ .navbar-default {
     background: white;
     color: teal;
-    padding: 20px 50px;
+}
+
+.container-home ~ .navbar-default a {
+    color: teal;
 }
 
 .container {
-    color: #363636;
     font-family: "Josefin Slab", sans-serif;
     padding: 50px 0px;
     text-align: center;
+    min-height: 90vh;
 }
 
-.container .home {
+.container-home {
     color: white;
-    background-color: darkcyan;
     background: linear-gradient(113deg, #00e79d, #02d1d8); 
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    min-height: 90vh;
 }
 
 form {
@@ -29,7 +53,7 @@ form {
 }
 
 .margem {
-    margin: 50px 0;
+    margin: 80px 0;
 }
 
 .btn {
@@ -37,10 +61,7 @@ form {
     background: white;
 	color: coral;
     font-size: 14pt;
-}
-
-.btn .signup {
-    color: mediumspringgreen;
+    margin: 40px 5px;
 }
 
 

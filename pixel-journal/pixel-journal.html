@@ -4,6 +4,8 @@
     <link href="/css/index.css" rel="stylesheet" media="screen">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -22,10 +24,10 @@
 
 <template name="navigation">
     <nav class="navbar navbar-default">
-        <a href="{{pathFor route='home'}}">PixelJournal</a>
+        <a class="nav-link" href="{{pathFor route='home'}}">PixelJournal</a>
         {{ #if currentUser }}
-            <a href="{{ pathFor route='notebooks' }}">Notebooks</a>
-            <button type="button" class="btn btn-default navbar-right">Adicionar Nota</button>
+            <a class="nav-link" href="{{ pathFor route='notebooks' }}">Notebooks</a>
+            <a type="button" class="signup btn btn-default navbar-right">Adicionar Nota</a>
         {{ /if }}
         {{ #if currentUser }}
             <a type="button" class="logout btn btn-default navbar-right">Logout</a>
@@ -37,18 +39,21 @@
 </template>
 
 <template name="home">
-    <div class="container home">
+    <section class="container-home">
+    <div class="container">
         <div class="row margem">
             <div class="col-md-8 col-md-offset-2">
                 <h1>Organiza os teus dias</h1>
-                <a class="btn signup margem" href="{{pathFor route='register'}}">Regista-te!</a>
+                <a class="btn" href="{{pathFor route='register'}}">Regista-te!</a>
             </div>
         </div>
     </div>
+    </section>
 </template>
 
 <template name="register">
-    <div class="container home">
+    <section class="container-home">
+    <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h2>Register</h2>
@@ -73,10 +78,12 @@
             </div>
         </div>
     </div>
+    </section>
 </template>
 
 <template name="login">
-    <div class="container home">
+    <section class="container-home">
+    <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h2>Log in</h2>
@@ -96,6 +103,7 @@
             </div>
         </div>
     </div>
+    </section>
 </template>
 
 <template name="quickAddNote">
@@ -152,7 +160,7 @@
                     {{ >quickAddNote }}
                 </div>
                 <div class="col-xs-12">
-                    <ul>
+                    <ul class="seccao_notas">
                         {{ #each note }}
                             {{ > noteIndividual }}
                         {{ /each }}
@@ -206,10 +214,9 @@
 
 <template name="noteIndividual">
     <li>
-        <h4><a href="/note/{{ _id }}">{{ name }} <small>{{ createdAt }}</small></a></h4>
-        <a href="#" class="delete-note">Delete this quick note</a>
-        <br>
+        <h4><a href="/note/{{ _id }}">{{ name }} <small>{{ createdAt }}</small></a></h4>       
         <input type="text" name="noteIndividual" value="{{ content }}">
+        <a href="#" class="delete-note"><i class="fa fa-times"></i></a>
     </li>
 </template>
 
