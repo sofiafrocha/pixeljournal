@@ -2,7 +2,7 @@ body {
     font-family: "Josefin Slab", sans-serif;
     padding: 0;
     margin: 0;
-    font-size: 15pt;
+    font-size: 14pt;
 }
 
 nav {
@@ -36,6 +36,11 @@ form {
 	border: none;
     background: white;
 	color: coral;
+    font-size: 14pt;
+}
+
+.btn .signup {
+    color: mediumspringgreen;
 }
 
 
