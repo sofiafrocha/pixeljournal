@@ -23,8 +23,10 @@
 <template name="navigation">
     <nav class="navbar navbar-default">
         <a href="{{pathFor route='home'}}">PixelJournal</a>
-        <a href="{{ pathFor route='notebooks' }}">Notebooks</a>
-        <button type="button" class="btn btn-default navbar-right">Adicionar Nota</button>
+        {{ #if currentUser }}
+            <a href="{{ pathFor route='notebooks' }}">Notebooks</a>
+            <button type="button" class="btn btn-default navbar-right">Adicionar Nota</button>
+        {{ /if }}
         {{ #if currentUser }}
             <a type="button" class="logout btn btn-default navbar-right">Logout</a>
         {{ else }}
@@ -120,80 +122,86 @@
 </template>
 
 <template name="note">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                {{ title }}
+    {{ #if currentUser }}
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    {{ title }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <textarea name="noteContent" rows="8" cols="40">{{ content }}</textarea>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <textarea name="noteContent" rows="8" cols="40">{{ content }}</textarea>
-            </div>
-        </div>
-    </div>
+    {{ /if }}
 </template>
 
 <template name="notes">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h2 class="pull-left">Section: {{ title }} - Notas</h2>
+    {{ #if currentUser }}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="pull-left">Section: {{ title }} - Notas</h2>
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    {{ >quickAddNote }}
+                </div>
+                <div class="col-xs-12">
+                    <ul>
+                        {{ #each note }}
+                            {{ > noteIndividual }}
+                        {{ /each }}
+                    </ul>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <p class="nota">
+                        Black whipped, latte brewed in, fair trade, cappuccino, steamed organic aromatic barista seasonal. Galão extra lungo decaffeinated beans cappuccino bar crema ristretto. Shop, filter robust saucer aroma sugar, foam aromatic extra cream skinny. Single origin cup, aged con panna wings cappuccino shop decaffeinated. <br>
+
+    Roast aged brewed, chicory, decaffeinated qui plunger pot single origin dark. Medium blue mountain variety, decaffeinated spoon froth iced extraction. So that, spoon white cup redeye frappuccino. Sugar sweet and, strong froth doppio, seasonal kopi-luwak skinny turkish galão.
+                    </p>
+                </div>
+            </div> -->
+
         </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                {{ >quickAddNote }}
-            </div>
-            <div class="col-xs-12">
-                <ul>
-                    {{ #each note }}
-                        {{ > noteIndividual }}
-                    {{ /each }}
-                </ul>
-            </div>
-        </div>
-        <!-- <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <p class="nota">
-                    Black whipped, latte brewed in, fair trade, cappuccino, steamed organic aromatic barista seasonal. Galão extra lungo decaffeinated beans cappuccino bar crema ristretto. Shop, filter robust saucer aroma sugar, foam aromatic extra cream skinny. Single origin cup, aged con panna wings cappuccino shop decaffeinated. <br>
-
-Roast aged brewed, chicory, decaffeinated qui plunger pot single origin dark. Medium blue mountain variety, decaffeinated spoon froth iced extraction. So that, spoon white cup redeye frappuccino. Sugar sweet and, strong froth doppio, seasonal kopi-luwak skinny turkish galão.
-                </p>
-            </div>
-        </div> -->
-
-    </div>
+    {{ /if }}
 </template>
 
 <template name="notebooks">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h2 class="pull-left">Notebooks</h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                {{ >addNotebook }}
-            </div>
-        </div>
-
-
-        <div class="row margem">
-                {{ #each notebook }}
-                <div class="col-md-6">
-                    <div class="caderno">
-                    <h3><a href="/sections/{{_id}}">{{ title }}</a></h3>
-                    12 notas
-                    </div>
+    {{ #if currentUser }}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="pull-left">Notebooks</h2>
                 </div>
-                {{ /each }}
-        </div>
+            </div>
 
-    </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    {{ >addNotebook }}
+                </div>
+            </div>
+
+
+            <div class="row margem">
+                    {{ #each notebook }}
+                    <div class="col-md-6">
+                        <div class="caderno">
+                        <h3><a href="/sections/{{_id}}">{{ title }}</a></h3>
+                        12 notas
+                        </div>
+                    </div>
+                    {{ /each }}
+            </div>
+
+        </div>
+    {{ /if }}
 </template>
 
 <template name="noteIndividual">
@@ -206,31 +214,32 @@ Roast aged brewed, chicory, decaffeinated qui plunger pot single origin dark. Me
 </template>
 
 <template name="sections">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-1">
-                <h2 class="pull-left">Notebook: {{ title }} - Sections</h2>
-            </div>
-            <div class="col-md-6">
-                {{ > addSection }}
-            </div>
-        </div>
-
-        {{ #each section }}
-            <div class="row margem">
-                <div class="col-xs-12 caderno">
-                            <h3>
-                                <!-- <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="cobaia"> -->
-                                <a href="/notes/{{ _id }}">
-                                    {{ title }}
-                                </a>
-                            </h3>
-                            12 notas
-
+    {{ #if currentUser }}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-1">
+                    <h2 class="pull-left">Notebook: {{ title }} - Sections</h2>
+                </div>
+                <div class="col-md-6">
+                    {{ > addSection }}
                 </div>
             </div>
-        {{ /each }}
 
-    </div>
+            {{ #each section }}
+                <div class="row margem">
+                    <div class="col-xs-12 caderno">
+                                <h3>
+                                    <!-- <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="cobaia"> -->
+                                    <a href="/notes/{{ _id }}">
+                                        {{ title }}
+                                    </a>
+                                </h3>
+                                12 notas
 
+                    </div>
+                </div>
+            {{ /each }}
+
+        </div>
+    {{ /if }}
 </template>

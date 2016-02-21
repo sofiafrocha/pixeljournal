@@ -81,12 +81,6 @@ if (Meteor.isClient) {
         }
     });
 
-    // Template.noteIndividual.helpers({
-    //     'checked': function() {
-    //         var isCompleted = this.completed;
-    //     }
-    // });
-
     Template.quickAddNote.events({
         // Add a quick note
         'submit form': function(event) {
